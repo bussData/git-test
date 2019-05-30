@@ -1,0 +1,77 @@
+BUENOS DÍAS, AGENCIA DHL, CODIGO 0014, NO PUEDE REGULARIZAR DAM 235-19-10-087343, IMPORTADOR OEA UNIQUE SA, ORDEN 006969. LE SALEN LOS ERRORES: G082 : ( ERROR DE RECTIFICACIÓN ) LA GARANTIA NOMINAL NO ESTA GARANTIZADA POR UNA ENTIDAD EMPRESA OEA ** LA GARANTIA NOMINAL NO ESTA GARANTIZADA POR UNA ENTIDAD EMPRESA OEA 8293 : ( ERROR DE RECTIFICACIÓN ) DATO MODIFICADO NO PERMITIDO, ESTÁ MODIFICANDO EL CAMPO: ADUAHDR1.RECEP_STRI ** NO PROCEDE LA REGULARIZACION CABE MENCIONAR QUE, EL ERROR G082, YA SE HA PRESENTADO EN DESPACHOS ANTERIORES DEL MISMO IMPORTADOR OEA Y ESTA REFERIDO A SU GARANTÍA. REF. REQ 2019-046842 REQ 2019-047193 (NINGUNO DE LOS DOS CUENTA CON ATENCION A LA FECHA) GRACIAS, SLDS,
+
+
+Fecha NumeraciÃ³n:23/05/2019
+
+
+select * from telelog where archivo='00790953' and codi_regi='10' and nume_orden='006969';  
+
+select nume_orden, codi_agent, codi_aduan,ano_prese,fech_ingsi,hora_ingsi, fec_levante, hor_levante, nume_manif, fech_manif, via_transp,fech_llega, tipo_despa, cdurge, tipo_aforo, a.* 
+from di19polizai a where nume_corre='087343' and ano_prese='19' and codi_aduan='235' and codi_regi='10';
+
+select * from di19seriesi  where nume_corre='087343' and ano_prese='19' and codi_aduan='235'
+
+select num_ctacte,a.* from cab_adiingreso a where nume_corre='087343' and codi_aduan='235' and ano_prese='19';
+
+
+
+ --verificacion de importador oea:
+ SELECT (CASE WHEN (select count(*) from operadoroea where cod_tipoper='2' and num_ruc= trim('20100102413') ) >=1 THEN  (CASE WHEN ((SELECT count(*)  FROM estadooea e LEFT JOIN operadoroea o ON e.num_ruc = o.num_ruc and e.cod_tipoper = o.cod_tipoper 
+             WHERE e.num_ruc = Trim('20100102413') and e.cod_tipoper = '2' AND cod_estado = '1' and TO_CHAR(to_date('20190523','YYYYMMDD'),'YYYYMMDD') between TO_CHAR(fec_inivig,'YYYYMMDD') and TO_CHAR(fec_finvig,'YYYYMMDD')
+             and ind_del='0') >= 1) and ((SELECT count(*)  FROM estadooea e LEFT JOIN operadoroea o ON e.num_ruc = o.num_ruc and e.cod_tipoper = o.cod_tipoper 
+             WHERE e.num_ruc = trim('20100102413') and e.cod_tipoper = '2'  AND cod_estado != '1' and TO_CHAR(to_date('20190523','YYYYMMDD'),'YYYYMMDD') between TO_CHAR(fec_inivig,'YYYYMMDD') and TO_CHAR(fec_finvig,'YYYYMMDD')
+             and ind_del='0') = 0)   THEN '2' ELSE '1' END) ELSE '0' END) as estado FROM DUAL;
+
+			 
+			 
+ --verificacion de exportador oea:
+ SELECT (CASE WHEN (select count(*) from operadoroea where cod_tipoper='1' and num_ruc= trim('20100102413') ) >=1 THEN
+             (CASE WHEN ((SELECT count(*)  FROM estadooea e LEFT JOIN operadoroea o ON e.num_ruc = o.num_ruc and e.cod_tipoper = o.cod_tipoper 
+             WHERE e.num_ruc = Trim('20100102413') and e.cod_tipoper = '1' AND cod_estado = '1' and TO_CHAR(to_date('20190523','YYYYMMDD'),'YYYYMMDD') between TO_CHAR(fec_inivig,'YYYYMMDD') and TO_CHAR(fec_finvig,'YYYYMMDD')
+             and ind_del='0') >= 1) and ((SELECT count(*)  FROM estadooea e LEFT JOIN operadoroea o ON e.num_ruc = o.num_ruc and e.cod_tipoper = o.cod_tipoper 
+             WHERE e.num_ruc = trim('20100102413') and e.cod_tipoper = '1'  AND cod_estado != '1' and TO_CHAR(to_date('20190523','YYYYMMDD'),'YYYYMMDD') between TO_CHAR(fec_inivig,'YYYYMMDD') and TO_CHAR(fec_finvig,'YYYYMMDD')
+             and ind_del='0') = 0)   THEN '2' ELSE '1' END) ELSE '0' END) as estado FROM DUAL;
+			 
+			 
+			 
+ --verificacion de invitado en la fecha de numeracion:
+SELECT (CASE WHEN (SELECT COUNT (*) FROM datacatalogo WHERE cod_catalogo = '591' AND cod_datacat = trim('20100102413') ) >=1 THEN
+                     (CASE WHEN (SELECT COUNT (*) FROM datacatalogo WHERE cod_catalogo = '591'  AND cod_datacat = trim('20100102413') and TO_CHAR(to_date('20190523','YYYYMMDD'),'YYYYMMDD')
+                      between TO_CHAR(fec_inidatcat,'YYYYMMDD') and TO_CHAR(fec_findatcat,'YYYYMMDD')) >= 1
+                      THEN '2' ELSE '1' END) ELSE '0' END) as estado FROM DUAL
+
+
+Select * from  cat_entgarant where   nume_docent = '20100102413' AND ctipo_docent = '4'
+
+
+
+Select * from  vig_garante   WHERE nume_docent='20100102413' AND ctipo_docent='4'
+
+
+select * from estadooea where num_ruc='20100102413'
+
+
+
+
+Datos de la garantia tipo 10-Invitado oea, SIN Restriccion de USO:
+==================================================================
+
+select ind_usorestringido ,a.* from cab_ctactegar a  where num_ctacte='201920031004211001'
+
+
+select * from mov_ctactegara where num_ctacte='201920031004211001' and cod_aduafecta='235' and cod_numafecta='026749'
+ 
+
+ select num_ctacte, ctipo_entidad, a.* from mov_ngarantia a 
+where nume_docben='20100102413' and nume_docent='20100102413' and num_ctacte='201920031004211001' ;
+
+
+Verificación de ausencia de deuda pendiente:
+============================================
+select count(*) as deuda from MOV_CTACTEGARA@prad1 where COD_ADUAFECTA='235' and ANN_ANOAFECTA='19' and COD_REGIAFECTA='10' and COD_NUMAFECTA='026749'
+ and COD_TIPOMOV = 1 and IND_ACTIVO  = 1 and IND_EXTINDEUDA = 0;
+
+
+ 
+ 
+
