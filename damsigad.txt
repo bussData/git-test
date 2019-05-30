@@ -101,3 +101,36 @@ select * from  mcdeta where  anno='19' and codi_aduan='235' and  trim(nume_mc)='
 select * from mcdage  where anno='19' and codi_aduan='235' and trim(nume_mc)='3632' and via_trans='5'
 
 select cant_bulto,cant_breci,cant_bbuen, cant_bmale,tpeso_brut,tpeso_reci, tpeso_buen, tPeso_male  ,a.* from mcdeta  a where anno='19' and codi_aduan='235' and trim(nume_mc)='3632' and via_trans='5'
+
+
+
+--rectis:
+
+select * from cab_predeclaracion where codi_aduan='235' and ano_prese='2019'  and valores like '%087343%'  
+AND pre_numero ='087343';
+
+
+select * from det_predeclaracion where codi_aduan='235' and ano_prese='2019'  AND pre_numero ='087343';
+ 
+
+ select * from   modif_acep  WHERE CODI_ADUAN='235' AND ANO_PRESE='2019' AND NUME_CORRE='087343' AND CODI_REGI='10'  
+ 
+
+
+Se confirma la rectificación electronica en el modulo de fox: (componente de producción)
+
+Se trae el expediente de produccion
+
+       SELECT 'X' Sel, LPAD(TO_CHAR(NroExpedi), 6, '0') Numero, anoexpedi Anio, fecexp  
+         FROM expedi a WHERE codi_adua = '235'
+          AND procedim  = '1607' AND o_TIPO = 17 AND o_ANNO = '2019'
+        AND o_NRO = TO_NUMBER('087343')  
+        
+        AND not  EXISTS(select * from docasoc b where b.CODI_ADUAN=a.codi_adua 
+        AND b.ANO_PRESE=a.o_ANNO AND b.NUME_CORRE=LPAD(TO_CHAR(a.o_NRO), 6, '0')
+       AND b.CODI_REGI='10' AND b.ANO_DOCUM=a.anoexpedi AND TO_NUMBER(b.NRO_DOCUM)=a.nroexpedi 
+       AND b.TIPO_DOCAS='EX');
+
+select * from docasoc WHERE codi_adua = '235'
+          AND CODI_REGI='10' AND o_TIPO = 17 AND ano_PRESE = '2019'
+        AND trim(NUME_CORRE) = TO_NUMBER('087343')  
