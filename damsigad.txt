@@ -79,3 +79,28 @@ traer a desarrollo: PRAD1
 select  * from cab_ctactegar    where num_ctacte='201920031004211003'
 select * from mov_ctactegara where num_ctacte='201920031004211003'
 select * from mov_ngarantia  where num_ctacte='201920031004211003' 
+
+
+manifiesto y 
+
+ 
+
+SELECT * FROM TABIMPDU WHERE nume_corre='026749' AND ano_prese='19' AND codi_aduan='235' AND codi_regi='10'
+
+ 
+DATA FoRMATO B:
+select * from formb_item where nume_corre='026749' and ano_prese='19' and codi_aduan='235' and codi_regi='10';
+select * from FORMB_FACT where nume_corre='026749' and ano_prese='19' and codi_aduan='235' ;
+select * from FORMB_CORR where codi_aduan='235' and ano_prese='19' and nume_corre='026749'
+
+
+INDICADORES:
+select * from polizaob where nume_corre='026749' and ano_prese='19' and codi_aduan='235';
+
+MANIFIESTO:
+select * from  mcdage where anno='19' and codi_aduan='235'  and trim(nume_mc)='1205'
+select * from  mcdeta where  anno='19' and codi_aduan='235' and  trim(nume_mc)='1205'
+ 
+select * from mcdage  where anno='19' and codi_aduan='235' and trim(nume_mc)='1205' and via_trans='5'
+
+select cant_bulto,cant_breci,cant_bbuen, cant_bmale,tpeso_brut,tpeso_reci, tpeso_buen, tPeso_male  ,a.* from mcdeta  a where anno='19' and codi_aduan='235' and trim(nume_mc)='1205' and via_trans='5'
