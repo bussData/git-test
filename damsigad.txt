@@ -75,3 +75,7 @@ select count(*) as deuda from MOV_CTACTEGARA@prad1 where COD_ADUAFECTA='235' and
  
  
 
+traer a desarrollo: PRAD1
+select  * from cab_ctactegar    where num_ctacte='201920031004211003'
+select * from mov_ctactegara where num_ctacte='201920031004211003'
+select * from mov_ngarantia  where num_ctacte='201920031004211003' 
