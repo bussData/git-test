@@ -134,3 +134,11 @@ Se trae el expediente de produccion
 select * from docasoc WHERE codi_adua = '235'
           AND CODI_REGI='10' AND o_TIPO = 17 AND ano_PRESE = '2019'
         AND trim(NUME_CORRE) = TO_NUMBER('087343')  
+
+
+-----
+select * from cab_predeclaracion where codi_aduan='235' and ano_prese='2019'  and valores like '%087343%'  
+AND pre_numero ='087343' and coperacion='05';
+
+select * from det_predeclaracion where codi_aduan='235' and ano_prese='2019'  AND pre_numero ='087343';
+ select * from   modif_acep  WHERE CODI_ADUAN='235' AND ANO_PRESE='2019' AND NUME_CORRE='087343' AND CODI_REGI='10'  and  ctipo_graba='E'
